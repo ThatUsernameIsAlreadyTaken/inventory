@@ -240,7 +240,7 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
   function join_product_table(){
      global $db;
-     $sql  =" SELECT p.id,p.name,p.location,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,c.name";
+     $sql  =" SELECT p.id,p.name,p.location,p.quantity,p.min,p.max,p.gpc_number,p.manufacturernumber,p.media_id,p.date,c.name";
     $sql  .=" AS category,m.file_name AS image";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.category_id";
@@ -280,7 +280,7 @@ function tableExists($table){
 
    function find_products_by_category($cat){
      global $db;
-     $sql  =" SELECT p.id,p.name,p.location,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,c.name";
+     $sql  =" SELECT p.id,p.name,p.location,p.quantity,p.gpc_number,p.manufacturernumber,p.media_id,p.date,c.name";
     $sql  .=" AS category,m.file_name AS image";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.category_id";
@@ -325,7 +325,7 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
  function find_recent_product_added($limit){
    global $db;
-   $sql   = " SELECT p.id,p.name,p.sale_price,p.media_id,c.name AS category,";
+   $sql   = " SELECT p.id,p.name,p.quantity,p.media_id,c.name AS category,";
    $sql  .= "m.file_name AS image FROM products p";
    $sql  .= " LEFT JOIN categories c ON c.id = p.category_id";
    $sql  .= " LEFT JOIN media m ON m.id = p.media_id";
