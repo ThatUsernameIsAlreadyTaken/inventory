@@ -15,7 +15,7 @@ if(!$product){
 ?>
 <?php
  if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-category','product-quantity','gpc_number', 'manufacturernumber' );
+    $req_fields = array('product-title','product-category','product-quantity','gpc_number', 'manufacturernumber', 'manufacturer', 'supplier', 'crit' );
     validate_fields($req_fields);
 
    if(empty($errors)){
@@ -262,10 +262,12 @@ if(!$product){
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<label for="qty">Critical Consumable</label>
-								<div class="input-group">
-									<input type="text" class="form-control" name="crit" value="<?php echo remove_junk($product['crit']);?>">
-								</div>
+								<label for="crit">Critical Consumable</label>
+								<select class="form-control" name="crit">
+									<option value="">Select True or False</option>
+									<option value=1>True</option>
+									<option value=0>False</option>
+								</select>
 							</div>
 						</div>
 				   </div>

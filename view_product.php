@@ -65,41 +65,14 @@ foreach ($all_photo as $photo)
 
 
 
-  <div class="row">
-    <div class="col-md-1">
+<div class="row">
+	<div class="col-md-1">
 	</div>
-    <div class="col-md-10">
-<div class="text-center"><label></label></div>
-    </div>
+	<div class="col-md-10">
+		<div class="text-center"><label></label></div>
+	</div>
 </div>
 
-
-
-  <div class="row">
-    <div class="col-md-1">
-	</div>
-    <div class="col-md-10">
-
-        <div class="panel-body">
-
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-<!--     *************************     -->
-                <th class="text-center" style="width: 10%;"> Category </th>
-                <th class="text-center" style="width: 10%;"> Location </th>
-                <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 15%;"> GPC P/N </th>
-                <th class="text-center" style="width: 15%;"> Manufacturer P/N </th>
-                <th class="text-center" style="width: 15%;"> Product Added </th>
-                <th class="text-center" style="width: 50px;"> Actions </th>
-              </tr>
-<!--     *************************     -->
-            </thead>
-            <tbody>
-<!--     *************************     -->
-
-              <tr>
 <?php
 foreach ($all_categories as $category )
 {
@@ -109,29 +82,44 @@ foreach ($all_categories as $category )
 	}
 }
 ?>
- 			    <td class="text-center"> <?php echo remove_junk($category['name']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['location']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['gpc_number']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['manufacturernumber']); ?></td>
-                <td class="text-center"> <?php echo read_date($product['date']); ?></td>
+
+
+  <div class="row">
+    <div class="col-md-1">
+	</div>
+    <div class="col-md-10">
+<!--     *************************     -->
+        <div class="panel-body">
+			<ul>
+				<li class="text-left"> Category: <?php echo remove_junk($category['name']); ?></li>
+				<li class="text-left"> Location: <?php echo remove_junk($product['location']); ?></li>
+                <li class="text-left"> Stock: <?php echo remove_junk($product['quantity']); ?></li>
+				<li class="text-left"> Min Quantity: <?php echo remove_junk($product['min']); ?></li>
+				<li class="text-left"> Max Quantity: <?php echo remove_junk($product['max']); ?></li>
+                <li class="text-left"> GPC P/N: <?php echo remove_junk($product['gpc_number']); ?></li>
+                <li class="text-left"> Manufacturer: <?php echo remove_junk($product['manufacturer']); ?></li>
+				<li class="text-left"> Manufacturer P/N: <?php echo remove_junk($product['manufacturernumber']); ?></li>
+				<li class="text-left"> Supplier: <?php echo remove_junk($product['supplier']); ?></li>
+                <li class="text-left"> Product Added: <?php echo read_date($product['date']); ?></li>
+                <li class="text-left"> Actions: 
+					<div class="btn-group">
+						<a href="add_stock.php?id=<?php echo (int)$product['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Add">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						<a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Edit" data-toggle="tooltip">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						<a href="delete_product.php?id=<?php echo (int)$product['id'];?>" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</div>
+				</li>
+            </ul>
 <!--     *************************     -->
                 <td class="text-center">
-                  <div class="btn-group">
-					<a href="add_stock.php?id=<?php echo (int)$product['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Add">
-					  <span class="glyphicon glyphicon-edit"></span>
-					</a>
-                    <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Edit" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                    <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-trash"></span>
-                    </a>
-                  </div>
+                  
                 </td>
               </tr>
-            </tbody>
-          </table>
         </div>
       </div>
 
