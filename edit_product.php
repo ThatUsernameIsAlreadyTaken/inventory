@@ -15,7 +15,7 @@ if(!$product){
 ?>
 <?php
  if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-category','product-quantity','cost-price', 'sale-price' );
+    $req_fields = array('product-title','product-category','product-quantity','gpc_number', 'manufacturernumber' );
     validate_fields($req_fields);
 
    if(empty($errors)){
@@ -33,10 +33,24 @@ if(!$product){
 		$p_loc  = remove_junk($db->escape($_POST['product-location']));
 		}	
 
-       $p_cat   = (int)$_POST['product-category'];
-       $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-       $p_buy   = remove_junk($db->escape($_POST['cost-price']));
-       $p_sale  = remove_junk($db->escape($_POST['sale-price']));
+		$p_cat   = (int)$_POST['product-category'];
+		$p_qty   = remove_junk($db->escape($_POST['product-quantity']));
+		$p_gpc_number   = remove_junk($db->escape($_POST['gpc_number']));
+		$p_min   = remove_junk($db->escape($_POST['min']));
+		$p_max   = remove_junk($db->escape($_POST['max']));
+		$p_gpc_number   = remove_junk($db->escape($_POST['gpc_number']));
+		$p_crit  = remove_junk($db->escape($_POST['crit']));
+		$p_manufacturer  = remove_junk($db->escape($_POST['manufacturer']));
+		$p_manufacturernumber  = remove_junk($db->escape($_POST['manufacturernumber']));
+		$p_supplier  = remove_junk($db->escape($_POST['supplier']));
+		$p_alt_manu  = remove_junk($db->escape($_POST['alt_manufacturer']));
+		$p_alt_manunum  = remove_junk($db->escape($_POST['alt_manufacturernumber']));
+		$p_alt_supplier  = remove_junk($db->escape($_POST['alt_supplier']));
+		$p_notes  = remove_junk($db->escape($_POST['notes']));
+		$p_item_cost  = remove_junk($db->escape($_POST['item_cost']));
+		$p_line  = remove_junk($db->escape($_POST['line']));
+		$p_machine  = remove_junk($db->escape($_POST['machine']));
+
        if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
          $media_id = '0';
        } else {
@@ -44,7 +58,11 @@ if(!$product){
        }
        $query   = "UPDATE products SET";
        $query  .=" name ='{$p_name}', description ='{$p_desc}',location ='{$p_loc}', quantity ='{$p_qty}',";
-       $query  .=" buy_price ='{$p_buy}',sale_price ='{$p_sale}',category_id ='{$p_cat}',media_id ='{$media_id}'";
+       $query  .=" gpc_number ='{$p_gpc_number}',category_id ='{$p_cat}',media_id ='{$media_id}',";
+	   $query  .=" min ='{$p_min}', max ='{$p_max}',manufacturer ='{$p_manufacturer}',manufacturernumber ='{$p_manufacturernumber}',";
+	   $query  .=" supplier ='{$p_supplier}', alt_manufacturer ='{$p_alt_manufacturer}', alt_manufacturernumber ='{$p_alt_manufacturernumber}',";
+	   $query  .=" alt_supplier ='{$p_alt_supplier}', notes ='{$p_notes}', crit ='{$p_crit}', line ='{$p_line}',  machine ='{$p_machine}',";
+	   $query  .=" item_cost ='{$p_item_cost}'";
        $query  .=" WHERE id ='{$product['id']}'";
        $result = $db->query($query);
                if($result && $db->affected_rows() === 1){
@@ -74,7 +92,7 @@ if(!$product){
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Add New Product</span>
+            <span>Edit Product</span>
          </strong>
         </div>
         <div class="panel-body">
@@ -131,43 +149,138 @@ if(!$product){
                 </div>
               </div>
 
-              <div class="form-group">
-               <div class="row">
-                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="qty">Quantity</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                       <i class="glyphicon glyphicon-shopping-cart"></i>
-                      </span>
-                      <input type="number" class="form-control" name="product-quantity" value="<?php echo remove_junk($product['quantity']); ?>">
-                   </div>
-                  </div>
-                 </div>
-                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="qty">cost price</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-usd"></i>
-                      </span>
-                      <input type="number" min="0" step="any" class="form-control" name="cost-price" value="<?php echo remove_junk($product['buy_price']);?>">
-                   </div>
-                  </div>
-                 </div>
-                  <div class="col-md-4">
-                   <div class="form-group">
-                     <label for="qty">Selling price</label>
-                     <div class="input-group">
-                       <span class="input-group-addon">
-                         <i class="glyphicon glyphicon-usd"></i>
-                       </span>
-                       <input type="number" min="0" step="any" class="form-control" name="sale-price" value="<?php echo remove_junk($product['sale_price']);?>">
-                    </div>
-                   </div>
-                  </div>
-               </div>
-              </div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="qty">GPC Number</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="gpc_number" value="<?php echo remove_junk($product['gpc_number']);?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+							<label for="qty">Quantity</label>
+								<div class="input-group">
+									<input type="number" class="form-control" name="product-quantity" value="<?php echo remove_junk($product['quantity']); ?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="qty">Min Quantity</label>
+								<div class="input-group">
+									<input type="number" class="form-control" name="min" value="<?php echo remove_junk($product['min']);?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="qty">Max Quantity</label>
+								<div class="input-group">
+									<input type="number" class="form-control" name="max" value="<?php echo remove_junk($product['max']);?>">
+								</div>
+							</div>
+						</div>
+				   </div>
+				</div>
+				
+<!--     *************************  manufacturer and supplier   -->				
+				
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+							<label for="manufacturer">Manufacturer</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="manufacturer" value="<?php echo remove_junk($product['manufacturer']); ?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="qty">Manufacturer number</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="manufacturernumber" value="<?php echo remove_junk($product['manufacturernumber']);?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="qty">Supplier</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="supplier" value="<?php echo remove_junk($product['supplier']);?>">
+								</div>
+							</div>
+						</div>
+				   </div>
+				</div>
+				
+<!--     ************************* Alternate manufacturer and supplier   -->				
+				
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+							<label for="manufacturer">Alternate Manufacturer</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="alt_manufacturer" value="<?php echo remove_junk($product['alt_manufacturer']); ?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="qty">Alternate Manufacturer number</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="alt_manufacturernumber" value="<?php echo remove_junk($product['alt_manufacturernumber']);?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="qty">Alternate Supplier</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="alt_supplier" value="<?php echo remove_junk($product['alt_supplier']);?>">
+								</div>
+							</div>
+						</div>
+				   </div>
+				</div>
+				
+<!--     ************************* item_cost and crit  -->				
+				
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="item_cost">Item Cost</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="item_cost" value="<?php echo remove_junk($product['item_cost']);?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="qty">Critical Consumable</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="crit" value="<?php echo remove_junk($product['crit']);?>">
+								</div>
+							</div>
+						</div>
+				   </div>
+				</div>
+				
+<!--     ************************* notes   -->				
+			
+				<div class="form-group">
+					<div class="row">
+						<label for="qty">Notes</label>
+						<div class="input-group">
+							<input type="text" class="form-control" name="notes" value="<?php echo remove_junk($product['notes']);?>">
+						</div>
+					</div>
+				</div>
               <button type="submit" name="product" class="btn btn-danger">Update</button>
           </form>
          </div>

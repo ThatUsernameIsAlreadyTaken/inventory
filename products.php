@@ -77,9 +77,11 @@ if ( isset($_POST['update_category'] ) )
                 <th> Product Title </th>
                 <th> Photo</th>
                 <th class="text-center" style="width: 10%;"> Location </th>
-                <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 10%;"> Cost Price </th>
-                <th class="text-center" style="width: 10%;"> Sale Price </th>
+                <th class="text-center" style="width: 50px;"> Stock </th>
+                <th class="text-center" style="width: 50px;"> Min </th>
+                <th class="text-center" style="width: 50px;"> Max </th>
+                <th class="text-center" style="width: 10%;"> GPC P/N </th>
+                <th class="text-center" style="width: 10%;"> Manufacturer P/N </th>
                 <th class="text-center" style="width: 10%;"> Product Added </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
               </tr>
@@ -103,8 +105,10 @@ if ( isset($_POST['update_category'] ) )
                 </td>
                 <td class="text-center"> <?php echo remove_junk($product['location']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['min']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['max']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['gpc_number']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['manufacturernumber']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
 <!--     *************************     -->
                 <td class="text-center">

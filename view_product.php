@@ -89,8 +89,8 @@ foreach ($all_photo as $photo)
                 <th class="text-center" style="width: 10%;"> Category </th>
                 <th class="text-center" style="width: 10%;"> Location </th>
                 <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 15%;"> Cost Price </th>
-                <th class="text-center" style="width: 15%;"> Sale Price </th>
+                <th class="text-center" style="width: 15%;"> GPC P/N </th>
+                <th class="text-center" style="width: 15%;"> Manufacturer P/N </th>
                 <th class="text-center" style="width: 15%;"> Product Added </th>
                 <th class="text-center" style="width: 50px;"> Actions </th>
               </tr>
@@ -112,8 +112,8 @@ foreach ($all_categories as $category )
  			    <td class="text-center"> <?php echo remove_junk($category['name']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['location']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['gpc_number']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['manufacturernumber']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
 <!--     *************************     -->
                 <td class="text-center">

@@ -35,11 +35,13 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width: 50px;">#</th>
-                    <th class="text-center" style="width: 50px;">Customer</th>
-                    <th class="text-center" style="width: 50px;">Pay Method</th>
-                    <th class="text-center" style="width: 50px;">Notes</th>
+                    <th class="text-center" style="width: 50px;">Employee</th>
+                    <th class="text-center" style="width: 50px;">Item number</th>
+                    <th class="text-center" style="width: 50px;">Qty. Taken</th>
                     <th class="text-center" style="width: 50px;">Date</th>
-                    <th class="text-center" style="width: 100px;">Actions</th>
+                    <th class="text-center" style="width: 100px;">Reason</th>
+					<th class="text-center" style="width: 100px;">Line</th>
+					<th class="text-center" style="width: 100px;">Machine</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,10 +55,10 @@
 					</td>
                     
                     <td class="text-center">
-						<?php echo remove_junk(ucfirst($order['customer']));?>
+						<?php echo remove_junk(ucfirst($order['employee']));?>
 					</td>
                     <td class="text-center">
-						<?php echo remove_junk(ucfirst($order['paymethod']));?>
+						<?php echo remove_junk(ucfirst($order['q_taken']));?>
 					</td>
 
                     <td class="text-center">

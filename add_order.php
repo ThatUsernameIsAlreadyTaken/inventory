@@ -14,18 +14,23 @@
 
 <?php
  if(isset($_POST['add_order'])){
-   $customer = remove_junk($db->escape($_POST['customer']));
-  $paymethod = remove_junk($db->escape($_POST['paymethod']));
-  $notes = remove_junk($db->escape($_POST['notes']));
-   $current_date    = make_date();
+	$req_fields = array( 'item','line','machine','reason','employee','q_taken');
+   validate_fields($req_fields);
+	$item = remove_junk($db->escape($_POST['item']));
+	$line = remove_junk($db->escape($_POST['line']));
+	$machine = remove_junk($db->escape($_POST['machine']));
+	$reason = remove_junk($db->escape($_POST['reason']));
+	$employee = remove_junk($db->escape($_POST['employee']));
+	$q_taken = remove_junk($db->escape($_POST['q_taken']));
+	$current_date    = make_date();
    if(empty($errors))
    {
-      $sql  = "INSERT INTO orders (id,customer,paymethod,notes,date)";
-      $sql .= " VALUES ('{$new_order_id}','{$customer}','{$paymethod}','{$notes}','{$current_date}')";
+      $sql  = "INSERT INTO checkout (item,line,machine,reason,date,employee,q_taken)";
+      $sql .= " VALUES ('{$item}','{$line}','{$machine}','{$reason}','{$current_date}','{$employee}','{$q_taken}')";
       if($db->query($sql))
       {
-        $session->msg("s", "Successfully Added order");
-	 redirect( ( 'add_sale_to_order.php?id=' . $new_order_id ) , false);
+        $session->msg("s", "Successfully Signed out item");
+	 redirect( 'add_order.php' , false);
       } else {
         $session->msg("d", "Sorry Failed to insert.");
 	 redirect( 'add_order.php' , false);
@@ -61,31 +66,50 @@
 <!--     *************************     -->
         <div class="form-group">
         </div>
-
+<!--     ************************* employee number   -->
         <div class="form-group">
-              <label for="name" class="control-label">Customer Name</label>
-              <input type="text" class="form-control" name="customer" value="" placeholder="Customer">
+              <label for="name" class="control-label">Employee Number</label>
+              <input type="text" class="form-control" name="employee" placeholder="Employee Number">
         </div>
-
+<!--     ************************* reason  -->
            <div class="form-group">
-                    <select class="form-control" name="paymethod">
-                      <option value="">Select Payment Method</option>
-                      <option value="Cash">Cash</option>
-                      <option value="Check">Check</option>
-                      <option value="Credit">Credit</option>
-                      <option value="Charge">Charge to Account</option>
+                    <select class="form-control" name="reason">
+                      <option value="">Select Reason</option>
+                      <option value="Cash">Down</option>
+                      <option value="Check">PM</option>
+                      <option value="Credit">Misc</option>
                     </select>
            </div>
+		   
+			<div class="form-group">
+				<input type="number" min="1" class="form-control" name="q_taken" placeholder="quantity taken">
+			</div>
+		   
+<!--     ************************* line and machine-->
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-6">
+					   <input type="text" class="form-control" name="line" placeholder="line">
+					</div>
+					<div class="col-md-6">
+					   <input type="text" class="form-control" name="machine" placeholder="machine">
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="row">
+					<input type="number" class="form-control" name="item" placeholder="GPC item number">
+				</div>
+			</div>
 
-           <div class="form-group">
-               <input type="text" class="form-control" name="notes" value="<?php echo remove_junk(ucfirst($order['notes']));?>" placeholder="Notes">
-           </div>
-
-<!--     *************************     -->
+<!--     ************************* <div class="col-md-4">    -->
         <div class="form-group clearfix">
-         <div class="pull-right">
-                <button type="submit" name="add_order" class="btn btn-info">Start Order</button>
-        </div>
+			<div class="row">
+				<div class="pull-left">
+					<button type="submit" name="add_order" class="btn btn-info">submit Item taken</button>
+				</div>
+			</div>
         </div>
     </form>
 </div>

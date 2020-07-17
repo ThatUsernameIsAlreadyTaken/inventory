@@ -14,9 +14,9 @@
   $delete_id = delete_by_id('categories',(int)$category['id']);
   if($delete_id){
       $session->msg("s","category deleted.");
-      redirect('category.php');
+      redirect('categories.php');
   } else {
       $session->msg("d","category deletion failed.");
-      redirect('category.php');
+      redirect('categories.php');
   }
 ?>
