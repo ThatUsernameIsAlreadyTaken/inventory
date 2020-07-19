@@ -1,11 +1,11 @@
 <?php
-  $page_title = 'All orders';
+  $page_title = 'Item Check Out';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(1);
   
-  $all_orders = find_all('orders');
-  $order_id = last_id('orders');
+  $all_orders = find_all('checkout');
+  $order_id = last_id('checkout');
   $new_order_id = $order_id[id] + 1;
 
 ?>
@@ -56,7 +56,7 @@
 <div class="login-page">
     <div class="text-center">
 <!--     *************************     -->
-       <h2>Add Order</h3>
+       <h2>Check Out Item</h3>
        <h3>#<?php echo $new_order_id;?></h3>
 <!--     *************************     -->
      </div>
@@ -75,9 +75,9 @@
            <div class="form-group">
                     <select class="form-control" name="reason">
                       <option value="">Select Reason</option>
-                      <option value="Cash">Down</option>
-                      <option value="Check">PM</option>
-                      <option value="Credit">Misc</option>
+                      <option value="Down">Down</option>
+                      <option value="PM">PM</option>
+                      <option value="Misc">Misc</option>
                     </select>
            </div>
 		   

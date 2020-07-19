@@ -1,10 +1,10 @@
 <?php
-  $page_title = 'All orders';
+  $page_title = 'All Sign Outs';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(1);
   
-  $all_orders = find_all('orders')
+  $all_orders = find_all('checkout')
 ?>
 
 <!--     *************************     -->
@@ -23,11 +23,11 @@
         <strong>
           <span class="glyphicon glyphicon-th"></span>
 <!--     *************************     -->
-          <span>All Orders</span>
+          <span>All Sign Outs</span>
 <!--     *************************     -->
        </strong>
           <div class="pull-right">
-            <a href="add_order.php" class="btn btn-primary">Add Order</a>
+            <a href="add_order.php" class="btn btn-primary">Go To Sign Out</a>
           </div>
       </div>
         <div class="panel-body">
@@ -46,35 +46,43 @@
             </thead>
             <tbody>
 <!--     *************************     -->
-              <?php foreach ($all_orders as $order):?>
+              <?php foreach ($all_orders as $checkout):?>
                 <tr>
                     <td class="text-center">
-					<a href="sales_by_order.php?id=<?php echo (int)$order['id'];?>">
-					<?php echo $order['id'];?>
+					<a href="sales_by_order.php?id=<?php echo (int)$checkout['id'];?>">
+					<?php echo $checkout['id'];?>
 					</a>	
 					</td>
                     
                     <td class="text-center">
-						<?php echo remove_junk(ucfirst($order['employee']));?>
+						<?php echo remove_junk(ucfirst($checkout['employee']));?>
 					</td>
                     <td class="text-center">
-						<?php echo remove_junk(ucfirst($order['q_taken']));?>
-					</td>
-
-                    <td class="text-center">
-						<?php echo remove_junk(ucfirst($order['notes']));?>
+						<?php echo remove_junk(ucfirst($checkout['q_taken']));?>
 					</td>
 
                     <td class="text-center">
-						<?php echo remove_junk(ucfirst($order['date']));?>
+						<?php echo remove_junk(ucfirst($checkout['date']));?>
+					</td>
+
+                    <td class="text-center">
+						<?php echo remove_junk(ucfirst($checkout['reason']));?>
+					</td>
+					
+					<td class="text-center">
+						<?php echo remove_junk(ucfirst($checkout['line']));?>
+					</td>
+					
+					<td class="text-center">
+						<?php echo remove_junk(ucfirst($checkout['machine']));?>
 					</td>
 
                     <td class="text-center">
                       <div class="btn-group">
-                        <a href="edit_order.php?id=<?php echo (int)$order['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
+                        <a href="edit_order.php?id=<?php echo (int)$checkout['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
                           <span class="glyphicon glyphicon-edit"></span>
                         </a>
-                        <a href="delete_order.php?id=<?php echo (int)$order['id'];?>" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
+                        <a href="delete_order.php?id=<?php echo (int)$checkout['id'];?>" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
                           <span class="glyphicon glyphicon-trash"></span>
                         </a>
                       </div>

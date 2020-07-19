@@ -99,9 +99,9 @@
                         <a href="edit_category.php?id=<?php echo (int)$cat['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
                           <span class="glyphicon glyphicon-edit"></span>
                         </a>
-                        <a href="delete_category.php?id=<?php echo (int)$cat['id'];?>"  onClick="return confirm('Are you sure you want to delete?')" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
-                          <span class="glyphicon glyphicon-trash"></span>
-                        </a>
+                   <!--     <a href="delete_category.php?id=<?php echo (int)$cat['id'];?>"  onClick="return confirm('Are you sure you want to delete?')" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">  -->
+                    <!--      <span class="glyphicon glyphicon-trash"></span>  -->
+                   <!--     </a>  -->
                       </div>
                     </td>
 

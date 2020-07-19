@@ -93,14 +93,22 @@ foreach ($all_categories as $category )
 			<ul>
 				<li class="text-left"> Category: <?php echo remove_junk($category['name']); ?></li>
 				<li class="text-left"> Location: <?php echo remove_junk($product['location']); ?></li>
+				<li class="text-left"> GPC P/N: <?php echo remove_junk($product['gpc_number']); ?></li>
                 <li class="text-left"> Stock: <?php echo remove_junk($product['quantity']); ?></li>
 				<li class="text-left"> Min Quantity: <?php echo remove_junk($product['min']); ?></li>
 				<li class="text-left"> Max Quantity: <?php echo remove_junk($product['max']); ?></li>
-                <li class="text-left"> GPC P/N: <?php echo remove_junk($product['gpc_number']); ?></li>
+				<li class="text-left"> Item Cost: <?php echo remove_junk($product['item_cost']); ?></li>
                 <li class="text-left"> Manufacturer: <?php echo remove_junk($product['manufacturer']); ?></li>
 				<li class="text-left"> Manufacturer P/N: <?php echo remove_junk($product['manufacturernumber']); ?></li>
 				<li class="text-left"> Supplier: <?php echo remove_junk($product['supplier']); ?></li>
+				<li class="text-left"> Alternate Manufacturer: <?php echo remove_junk($product['alt_manufacturer']); ?></li>
+				<li class="text-left"> Alternate Manufacturer P/N: <?php echo remove_junk($product['alt_manufacturernumber']); ?></li>
+				<li class="text-left"> Alternate Supplier: <?php echo remove_junk($product['alt_supplier']); ?></li>
+				<li class="text-left"> Notes: <?php echo remove_junk($product['notes']); ?></li>
+				<li class="text-left"> Critical Item: <?php if ($product['crit'] < '1') { echo "no";} else { echo "yes";}; ?></li>
                 <li class="text-left"> Product Added: <?php echo read_date($product['date']); ?></li>
+				<li class="text-left"> Line: <?php echo remove_junk($product['Line']); ?></li>
+                <li class="text-left"> Machine: <?php echo read_date($product['Machine']); ?></li>
                 <li class="text-left"> Actions: 
 					<div class="btn-group">
 						<a href="add_stock.php?id=<?php echo (int)$product['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Add">
