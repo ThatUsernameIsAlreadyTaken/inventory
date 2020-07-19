@@ -397,6 +397,14 @@ function find_recent_sale_added($limit){
   $sql .= " ORDER BY s.date DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }
+
+function find_below_min(){
+	global $db;
+	$sql  = "SELECT p.id,p.name,p.quantity,p.crit";
+	$sql .= " FROM products p";
+	$sql .= " WHERE p.quantity < p.min";
+	return find_by_sql($sql);
+}
 /*--------------------------------------------------------------*/
 /* Function for Generate sales report by two dates
 /*--------------------------------------------------------------*/
