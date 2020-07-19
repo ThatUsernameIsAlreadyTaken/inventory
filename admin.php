@@ -9,9 +9,9 @@
  $c_product       = count_by_id('products');
  $c_sale          = count_by_id('sales');
  $c_user          = count_by_id('users');
- $products_sold   = find_higest_saleing_product('10');
- $recent_products = find_recent_product_added('5');
- $recent_sales    = find_recent_sale_added('5')
+ $recent_products = find_recent_product_added('10');
+ $recent_sales    = find_recent_sale_added('10');
+ $below_limit	  = find_below_min();
 ?>
 <?php include_once('layouts/header.php'); ?>
 
@@ -110,52 +110,13 @@ function closePanel()
   </div>
 <!--     *************************     -->
   <div class="row">
-   <div class="col-md-4">
-     <div class="panel panel-default">
-       <div class="panel-heading">
-         <strong>
-           <span class="glyphicon glyphicon-th"></span>
-           <span>Highest Selling Products</span>
-         </strong>
-       </div>
-
-       <div class="panel-body">
-         <table class="table table-striped table-bordered table-condensed">
-
-          <thead>
-           <tr>
-             <th>Title</th>
-             <th>Total Sold</th>
-             <th>Total Quantity</th>
-           <tr>
-          </thead>
-
-
-          <tbody>
-
-            <?php foreach ($products_sold as  $product_sold): ?>
-
-              <tr>
-                <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
-                <td><?php echo (int)$product_sold['totalSold']; ?></td>
-                <td><?php echo (int)$product_sold['totalQty']; ?></td>
-              </tr>
-
-            <?php endforeach; ?>
-
-
-          <tbody>
-         </table>
-       </div>
-     </div>
-   </div>
 <!--     *************************     -->
-   <div class="col-md-4">
+   <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>LATEST SALES</span>
+            <span>Bins Below Min</span>
           </strong>
         </div>
         <div class="panel-body">
@@ -164,23 +125,23 @@ function closePanel()
          <tr>
            <th class="text-center" style="width: 50px;">#</th>
            <th>Product Name</th>
-           <th>Date</th>
-           <th>Total Sale</th>
+           <th>Item Quantity</th>
+		   <th>Critical Item</th>
          </tr>
        </thead>
        <tbody>
 
 
-         <?php foreach ($recent_sales as  $recent_sale): ?>
+         <?php foreach ($below_limit as  $recent_sale): ?>
          <tr>
            <td class="text-center"><?php echo count_id();?></td>
            <td>
-            <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">
-             <?php echo remove_junk(first_character($recent_sale['name'])); ?>
+            <a href="edit_product.php?id=<?php echo (int)$recent_sale['id']; ?>">
+             <?php echo remove_junk($recent_sale['name']); ?>
            </a>
            </td>
-           <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-           <td>$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+           <td><?php echo remove_junk($recent_sale['quantity']); ?></td>
+		   <td><?php if ($recent_sale['crit'] < '1') { echo "no";} else { echo "yes";}; ?></td>
         </tr>
 
        <?php endforeach; ?>
