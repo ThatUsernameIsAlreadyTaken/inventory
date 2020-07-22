@@ -102,7 +102,7 @@ function closePanel()
         </div>
 
         <div class="jumbotron text-center">
-           <h3>Welcome!</h3>Don't tell me when things are wrong. I don't want to know. Its probably Melissas fault anyway.
+           <h3>Welcome!</h3>Recently added bins below limit to admin page. Fixed singing out items not actually changing quantity in stock.
         </div>
 
       </div>
@@ -141,7 +141,7 @@ function closePanel()
            </a>
            </td>
            <td><?php echo remove_junk($recent_sale['quantity']); ?></td>
-		   <td><?php if ($recent_sale['crit'] < '1') { echo "no";} else { echo "yes";}; ?></td>
+		   <td><?php if ($recent_sale['crit'] < '1') { echo "No";} else { echo "Yes";}; ?></td>
         </tr>
 
        <?php endforeach; ?>

@@ -4,7 +4,7 @@
   page_require_level(2);
 ?>
 <?php
-  $d_order = find_by_id('orders',(int)$_GET['id']);
+  $d_order = find_by_id('checkout',(int)$_GET['id']);
 
   if(!$d_order){
     $session->msg("d","Missing order id.");
@@ -22,7 +22,7 @@ foreach ( $sales as $sale )
 	}
 }
 
-$delete_id = delete_by_id('orders',(int)$d_order['id']);
+$delete_id = delete_by_id('checkout',(int)$d_order['id']);
   
   if($delete_id)
   {

@@ -11,76 +11,75 @@
 
 
 <?php
- if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-category','product-quantity','product-min','product-max','gpc_number','crit','manufacturer','manufacturernumber','supplier','item_cost' );
-   validate_fields($req_fields);
-   if(empty($errors)){
-     $p_name  = remove_junk($db->escape($_POST['product-title']));
-     $p_desc  = remove_junk($db->escape($_POST['product-desc']));
-     $p_loc  = remove_junk($db->escape($_POST['product-location']));
-     $p_cat   = remove_junk($db->escape($_POST['product-category']));
-     $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-     $p_min   = remove_junk($db->escape($_POST['product-min']));
-     $p_max   = remove_junk($db->escape($_POST['product-max']));
-     $p_gpc_number   = remove_junk($db->escape($_POST['gpc_number']));
-     $p_crit  = remove_junk($db->escape($_POST['crit']));
-     $p_manu  = remove_junk($db->escape($_POST['manufacturer']));
-     $p_manunum  = remove_junk($db->escape($_POST['manufacturernumber']));
-     $p_supplier  = remove_junk($db->escape($_POST['supplier']));
-     $p_alt_manu  = remove_junk($db->escape($_POST['alt_manufacturer']));
-     $p_alt_manunum  = remove_junk($db->escape($_POST['alt_manufacturernumber']));
-     $p_alt_supplier  = remove_junk($db->escape($_POST['alt_supplier']));
-     $p_notes  = remove_junk($db->escape($_POST['notes']));
-     $p_item_cost  = remove_junk($db->escape($_POST['item_cost']));
-     $p_line  = remove_junk($db->escape($_POST['line']));
-     $p_machine  = remove_junk($db->escape($_POST['machine']));
-
-     if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
-       $media_id = '0';
-     } else {
-       $media_id = remove_junk($db->escape($_POST['product-photo']));
-     }
-     $date    = make_date();
-     $query  = "INSERT INTO products (";
-     $query .=" name,description,location,quantity,min,max,gpc_number,category_id,media_id,date,manufacturer,manufacturernumber,supplier,alt_manufacturer,alt_manufacturernumber,alt_supplier,notes,item_cost,crit,line,machine";
-     $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_desc}', '{$p_loc}', '{$p_qty}', '{$p_min}', '{$p_max}', '{$p_gpc_number}', '{$p_cat}', '{$media_id}', '{$date}', '{$p_manu}', '{$p_manunum}', '{$p_supplier}', '{$p_alt_manu}', '{$p_alt_manunum}', '{$p_alt_supplier}', '{$p_notes}', '{$p_item_cost}', '{$p_crit}', '{$p_line}', '{$p_machine}'";
-     $query .=")";
-     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
-     if($db->query($query))
-     {
-
-   $product = last_id("products");
-   $product_id = $product['id'];
-	if ( $product_id == 0 )
+	if(isset($_POST['add_product']))
 	{
-       $session->msg('d',' Sorry failed to added!');
-       redirect('add_product.php', false);
-   }
+		$req_fields = array('product-title','product-category','product-quantity','product-min','product-max','gpc_number','crit','manufacturer','manufacturernumber','supplier','item_cost' );
+		validate_fields($req_fields);
+		if(empty($errors))
+		{
+			$p_name  = remove_junk($db->escape($_POST['product-title']));
+			$p_desc  = remove_junk($db->escape($_POST['product-desc']));
+			$p_loc  = remove_junk($db->escape($_POST['product-location']));
+			$p_cat   = remove_junk($db->escape($_POST['product-category']));
+			$p_qty   = remove_junk($db->escape($_POST['product-quantity']));
+			$p_min   = remove_junk($db->escape($_POST['product-min']));
+			$p_max   = remove_junk($db->escape($_POST['product-max']));
+			$p_gpc_number   = remove_junk($db->escape($_POST['gpc_number']));
+			$p_crit  = remove_junk($db->escape($_POST['crit']));
+			$p_manu  = remove_junk($db->escape($_POST['manufacturer']));
+			$p_manunum  = remove_junk($db->escape($_POST['manufacturernumber']));
+			$p_supplier  = remove_junk($db->escape($_POST['supplier']));
+			$p_alt_manu  = remove_junk($db->escape($_POST['alt_manufacturer']));
+			$p_alt_manunum  = remove_junk($db->escape($_POST['alt_manufacturernumber']));
+			$p_alt_supplier  = remove_junk($db->escape($_POST['alt_supplier']));
+			$p_notes  = remove_junk($db->escape($_POST['notes']));
+			$p_item_cost  = remove_junk($db->escape($_POST['item_cost']));
+			$p_line  = remove_junk($db->escape($_POST['line']));
+			$p_machine  = remove_junk($db->escape($_POST['machine']));
 
-	$quantity = $p_qty;
-       $cost = $p_buy;
-  $comments = "initial stock";
+			if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
+				$media_id = '0';
+			} else {
+				$media_id = remove_junk($db->escape($_POST['product-photo']));
+			}
+			$date   = make_date();
+			$query  = "INSERT INTO products (";
+			$query .=" name,description,location,quantity,min,max,gpc_number,category_id,media_id,date,manufacturer,manufacturernumber,supplier,alt_manufacturer,alt_manufacturernumber,alt_supplier,notes,item_cost,crit,line,machine";
+			$query .=") VALUES (";
+			$query .=" '{$p_name}', '{$p_desc}', '{$p_loc}', '{$p_qty}', '{$p_min}', '{$p_max}', '{$p_gpc_number}', '{$p_cat}', '{$media_id}', '{$date}', '{$p_manu}', '{$p_manunum}', '{$p_supplier}', '{$p_alt_manu}', '{$p_alt_manunum}', '{$p_alt_supplier}', '{$p_notes}', '{$p_item_cost}', '{$p_crit}', '{$p_line}', '{$p_machine}'";
+			$query .=")";
+			$query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
+			if($db->query($query))
+			{
+				$product = last_id("products");
+				$product_id = $product['id'];
+				if ( $product_id == 0 )
+				{
+					$session->msg('d',' Sorry failed to added!');
+					redirect('add_product.php', false);
+				}
+				$quantity = $p_qty;
+				$cost = $p_buy;
+				$comments = "initial stock";
+				$sql  = "INSERT INTO stock (product_id,quantity,comments,date)";
+				$sql .= " VALUES ('{$product_id}','{$quantity}','{$comments}','{$date}')";
+				$result = $db->query($sql);
+				if( $result && $db->affected_rows() === 1)
+				{
+					$session->msg('s',"Product added ");
+					redirect('products.php', false);
+				}
+			} else {
+				$session->msg('d',' Sorry failed to added!');
+				redirect('add_product.php', false);
+			}
 
-      $sql  = "INSERT INTO stock (product_id,quantity,comments,date)";
-      $sql .= " VALUES ('{$product_id}','{$quantity}','{$comments}','{$date}')";
-          $result = $db->query($sql);
-          if( $result && $db->affected_rows() === 1)
-          {
-       $session->msg('s',"Product added ");
-       redirect('products.php', false);
-   }
-     } else {
-       $session->msg('d',' Sorry failed to added!');
-       redirect('add_product.php', false);
-     }
+		} else{
+			$session->msg("d", $errors);
+			redirect('add_product.php',false);
+		}
 
-   } else{
-     $session->msg("d", $errors);
-     redirect('add_product.php',false);
-   }
-
- }
+	}
 
 ?>
 

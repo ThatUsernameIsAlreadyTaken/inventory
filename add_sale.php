@@ -1,46 +1,44 @@
 <?php
-  $page_title = 'Add Sale';
-  require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-   page_require_level(3);
-
-		  $order_id = last_id('orders');
-		  $o_id = $order_id[id];
+	$page_title = 'Add Sale';
+	require_once('includes/load.php');
+	// Checkin What level user has permission to view this page
+	page_require_level(3);
+	$order_id = last_id('orders');
+	$o_id = $order_id[id];
+	$all_categories = find_all('categories');
 
 ?>
 <?php
-
   if(isset($_POST['add_sale'])){
     $req_fields = array('s_id','quantity','price','total', 'date' );
     validate_fields($req_fields);
         if(empty($errors)){
-          $p_id      = $db->escape((int)$_POST['s_id']);
-          $s_qty     = $db->escape((int)$_POST['quantity']);
-
+			$p_id      = $db->escape((int)$_POST['s_id']);
+			$s_qty     = $db->escape((int)$_POST['quantity']);
 			$product = find_by_id("products", $p_id);
 			if ( (int)$product[quantity] < $s_qty )
 			{	
                   $session->msg('d',' Insufficient Quantity for Sale!');
                   redirect('add_sale.php', false);
 			}
-          $s_total   = $db->escape($_POST['total']);
-          $date      = $db->escape($_POST['date']);
-          $s_date    = make_date();
+			$s_total   = $db->escape($_POST['total']);
+			$date      = $db->escape($_POST['date']);
+			$s_date    = make_date();
+			
+			$sql  = "INSERT INTO sales (";
+			$sql .= " product_id,order_id,qty,price,date";
+			$sql .= ") VALUES (";
+			$sql .= "'{$p_id}','{$o_id}','{$s_qty}','{$s_total}','{$s_date}'";
+			$sql .= ")";
 
-          $sql  = "INSERT INTO sales (";
-          $sql .= " product_id,order_id,qty,price,date";
-          $sql .= ") VALUES (";
-          $sql .= "'{$p_id}','{$o_id}','{$s_qty}','{$s_total}','{$s_date}'";
-          $sql .= ")";
-
-                if($db->query($sql)){
-                  decrease_product_qty($s_qty,$p_id);
-                  $session->msg('s',"Sale added. ");
-                  redirect('add_sale.php', false);
-                } else {
-                  $session->msg('d',' Sorry failed to add!');
-                  redirect('add_sale.php', false);
-                }
+			if($db->query($sql)){
+			  decrease_product_qty($s_qty,$p_id);
+			  $session->msg('s',"Sale added. ");
+			  redirect('add_sale.php', false);
+			} else {
+			  $session->msg('d',' Sorry failed to add!');
+			  redirect('add_sale.php', false);
+			}
         } else {
            $session->msg("d", $errors);
            redirect('add_sale.php',false);
@@ -77,33 +75,64 @@
 
 </div>
 <div class="row">
-
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix">
-        <strong>
-          <span class="glyphicon glyphicon-th"></span>
-          <span>Sale Edit</span>
-       </strong>
-      </div>
-      <div class="panel-body">
-        <form method="post" action="add_sale.php">
-         <table class="table table-bordered">
-           <thead>
-            <th> Item </th>
-            <th> Price </th>
-            <th> Qty </th>
-            <th> Total </th>
-            <th> Date</th>
-            <th> Action</th>
-           </thead>
-             <tbody  id="product_info"> </tbody>
-         </table>
-       </form>
-      </div>
-    </div>
-  </div>
-
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<strong>
+					<span class="glyphicon glyphicon-th"></span>
+					<span>Sale Edit</span>
+				</strong>
+			</div>
+			<div class="panel-body">
+				<form method="post" action="add_sale.php">
+					<table class="table table-bordered">
+						<thead>
+							<th> Item </th>
+							<th> Price </th>
+							<th> Qty </th>
+							<th> Total </th>
+							<th> Date</th>
+							<th> Action</th>
+						</thead>
+						<tbody  id="product_info"> </tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-
+<div id="wrap">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<form class="form-horizontal" action="csv.php" method="post" name="upload_excel" enctype="multipart/form-data">
+						<fieldset>
+							<!-- Form Name -->
+							<legend> Import item information to products</legend>
+							<!-- File Button -->
+							<div class="row">
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="filebutton">Select File</label>
+									<div class="col-md-4">
+										<input type="file" name="file" id="file" class="input-large" style="width:40px; background-color:black">
+									</div>
+								</div>
+							</div>
+							<!-- Button -->
+							<div class="row">
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="singlebutton">Import data</label>
+									<div class="col-md-4">
+										<button type="submit" id="submit" name="Import" class="btn btn-primary button-loading" data-loading-text="Loading...">Import</button>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <?php include_once('layouts/footer.php'); ?>

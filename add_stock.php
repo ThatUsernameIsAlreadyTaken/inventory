@@ -49,63 +49,51 @@ $all_products = find_all('products');
 **/
 
 ?>
-
-<!--     *************************     -->
-
 <?php include_once('layouts/header.php'); ?>
-
-
 <div class="login-page">
-    <div class="text-center">
-<!--     *************************     -->
-       <h2>Add Stock</h3>
-<!--     *************************     -->
-     </div>
-        <div class="form-group">
-     <?php echo display_msg($msg); ?>
-        </div>
+	<div class="text-center">
+		<h2>Add Stock</h3>
+	</div>
+	<div class="form-group">
+		<?php echo display_msg($msg); ?>
+	</div>
 
-      <form method="post" action="" class="clearfix">
-        <div class="form-group">
-<!--
-<label for="name" class="control-label">Product</label>
--->
-<select class="form-control" name="product_id">
-<option value="0">Select Product</option>
-<?php
-foreach ( $all_products as $product )
-{
-if ( $selected_product == $product['id'] )
-{
-		echo "<option value=\"" . $product['id'] . "\" selected>" . $product['name'] . "</option>";
-} else {
-		echo "<option value=\"" . $product['id'] . "\">" . $product['name'] . "</option>";
-}
-}
-?>
-</select>
-           </div>
+	<form method="post" action="" class="clearfix">
+		<div class="form-group">
+			<select class="form-control" name="product_id">
+				<option value="0">Select Product</option>
+				<?php
+					foreach ( $all_products as $product )
+					{
+						if ( $selected_product == $product['id'] )
+						{
+							echo "<option value=\"" . $product['id'] . "\" selected>" . $product['name'] . "</option>";
+						} else {
+							echo "<option value=\"" . $product['id'] . "\">" . $product['name'] . "</option>";
+						}
+					}
+				?>
+			</select>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="glyphicon glyphicon-shopping-cart"></i>
+				</span>
+				<input type="number" class="form-control" name="quantity" placeholder="Product Quantity">
+			</div>
+		</div>
 
-           <div class="form-group">
-		   <div class="input-group">
-			 <span class="input-group-addon">
-			  <i class="glyphicon glyphicon-shopping-cart"></i>
-			 </span>
-			 <input type="number" class="form-control" name="quantity" placeholder="Product Quantity">
-		  </div>
-           </div>
-
-           <div class="form-group">
-               <input type="text" class="form-control" name="comments" value="<?php echo remove_junk(ucfirst($stock['comments']));?>" placeholder="Comments">
-           </div>
-
-<!--     *************************     -->
-        <div class="form-group clearfix">
-         <div class="pull-right">
-                <button type="submit" name="add_stock" class="btn btn-info">Add</button>
-        </div>
-        </div>
-    </form>
+		<div class="form-group">
+			<input type="text" class="form-control" name="comments" value="<?php echo remove_junk(ucfirst($stock['comments']));?>" placeholder="Comments">
+		</div>
+	<!--     *************************     -->
+		<div class="form-group clearfix">
+			<div class="pull-right">
+				<button type="submit" name="add_stock" class="btn btn-info">Add</button>
+			</div>
+		</div>
+	</form>
 </div>
 
 <?php include_once('layouts/footer.php'); ?>

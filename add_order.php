@@ -2,7 +2,7 @@
   $page_title = 'Item Check Out';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(1);
+  page_require_level(3);
   
   $all_orders = find_all('checkout');
   $order_id = last_id('checkout');
@@ -30,7 +30,14 @@
       if($db->query($sql))
       {
         $session->msg("s", "Successfully Signed out item");
-	 redirect( 'add_order.php' , false);
+		$product = find_by_gpcnum("products", $item);
+		$q_before = $product[quantity];
+		$q_result = $q_before - $q_taken;
+		$sql = "UPDATE products SET";
+        $sql .= " quantity='{$q_result}'";
+        $sql .= " WHERE id='{$product['id']}'";
+		$result = $db->query($sql);
+		redirect( 'add_order.php' , false);
       } else {
         $session->msg("d", "Sorry Failed to insert.");
 	 redirect( 'add_order.php' , false);

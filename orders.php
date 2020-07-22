@@ -42,6 +42,7 @@
                     <th class="text-center" style="width: 100px;">Reason</th>
 					<th class="text-center" style="width: 100px;">Line</th>
 					<th class="text-center" style="width: 100px;">Machine</th>
+					<th class="text-center" style="width: 100px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,9 +54,11 @@
 					<?php echo $checkout['id'];?>
 					</a>	
 					</td>
-                    
                     <td class="text-center">
 						<?php echo remove_junk(ucfirst($checkout['employee']));?>
+					</td>
+                    <td class="text-center">
+						<?php echo remove_junk(ucfirst($checkout['item']));?>
 					</td>
                     <td class="text-center">
 						<?php echo remove_junk(ucfirst($checkout['q_taken']));?>
