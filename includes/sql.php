@@ -303,10 +303,6 @@ function tableExists($table){
     return find_by_sql($sql);
    }
 
-
-
-
-
   /*--------------------------------------------------------------*/
   /* Function for Increase product quantity
   /*--------------------------------------------------------------*/
