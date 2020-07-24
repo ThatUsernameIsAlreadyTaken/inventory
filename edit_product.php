@@ -38,13 +38,12 @@ if(!$product){
 		$p_gpc_number   = remove_junk($db->escape($_POST['gpc_number']));
 		$p_min   = remove_junk($db->escape($_POST['min']));
 		$p_max   = remove_junk($db->escape($_POST['max']));
-		$p_gpc_number   = remove_junk($db->escape($_POST['gpc_number']));
 		$p_crit  = remove_junk($db->escape($_POST['crit']));
 		$p_manufacturer  = remove_junk($db->escape($_POST['manufacturer']));
 		$p_manufacturernumber  = remove_junk($db->escape($_POST['manufacturernumber']));
 		$p_supplier  = remove_junk($db->escape($_POST['supplier']));
-		$p_alt_manu  = remove_junk($db->escape($_POST['alt_manufacturer']));
-		$p_alt_manunum  = remove_junk($db->escape($_POST['alt_manufacturernumber']));
+		$p_alt_manufacturer  = remove_junk($db->escape($_POST['alt_manufacturer']));
+		$p_alt_manufacturernumber  = remove_junk($db->escape($_POST['alt_manufacturernumber']));
 		$p_alt_supplier  = remove_junk($db->escape($_POST['alt_supplier']));
 		$p_notes  = remove_junk($db->escape($_POST['notes']));
 		$p_item_cost  = remove_junk($db->escape($_POST['item_cost']));
@@ -69,7 +68,7 @@ if(!$product){
                  $session->msg('s',"Product updated ");
                  redirect('products.php', false);
                } else {
-                 $session->msg('d',' Sorry failed to updated!');
+                 $session->msg('d',' Sorry failed to update!');
                  redirect('edit_product.php?id='.$product['id'], false);
                }
 

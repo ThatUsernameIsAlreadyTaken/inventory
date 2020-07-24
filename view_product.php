@@ -1,17 +1,18 @@
 <?php
-  $page_title = 'All Product';
-  require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-   page_require_level(2);
+	$page_title = 'All Product';
+	require_once('includes/load.php');
+	// Checkin What level user has permission to view this page
+	page_require_level(2);
 
-$product = find_by_id('products',(int)$_GET['id']);
-$all_categories = find_all('categories');
-$all_photo = find_all('media');
-if( ! $product )
-{
-  $session->msg("d","Missing product id.");
-//  redirect('products.php');
-}
+	$product = find_by_id('products',(int)$_GET['id']);
+	$all_categories = find_all('categories');
+	$all_photo = find_all('media');
+	$all_stock = find_all('stock');
+	if( ! $product )
+	{
+		$session->msg("d","Missing product id.");
+		//  redirect('products.php');
+	}
 ?>
 
 <?php include_once('layouts/header.php'); ?>
@@ -127,6 +128,34 @@ if( ! $product )
 			//	print "</pre>\n";
 			?>
 
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<strong>
+					<span class="glyphicon glyphicon-th"></span>
+					<span>Inventory Movement</span>
+				</strong>
+			</div>
+			<?php
+				foreach ( $all_stock as $stock )
+				{
+					if ( $stock['product_id'] == $product['id'] ){
+						echo " ";
+						echo $stock['date'];
+						echo " ";
+						echo "Quantity Taken: ";
+						echo $stock['quantity'];
+						echo " ";
+						echo "Comments: ";
+						echo $stock['comments'];
+						echo "</br>";
+					}
+				}
+			?>
 		</div>
 	</div>
 </div>

@@ -10,56 +10,63 @@
 
 ?>
 
-<!--     *************************     -->
-
 <?php
- if(isset($_POST['add_order'])){
-	$req_fields = array( 'item','line','machine','reason','employee','q_taken');
-   validate_fields($req_fields);
-	$item = remove_junk($db->escape($_POST['item']));
-	$line = remove_junk($db->escape($_POST['line']));
-	$machine = remove_junk($db->escape($_POST['machine']));
-	$reason = remove_junk($db->escape($_POST['reason']));
-	$employee = remove_junk($db->escape($_POST['employee']));
-	$q_taken = remove_junk($db->escape($_POST['q_taken']));
-	$current_date    = make_date();
-   if(empty($errors))
-   {
-      $sql  = "INSERT INTO checkout (item,line,machine,reason,date,employee,q_taken)";
-      $sql .= " VALUES ('{$item}','{$line}','{$machine}','{$reason}','{$current_date}','{$employee}','{$q_taken}')";
-      if($db->query($sql))
-      {
-        $session->msg("s", "Successfully Signed out item");
-		$product = find_by_gpcnum("products", $item);
-		$q_before = $product[quantity];
-		$q_result = $q_before - $q_taken;
-		$sql = "UPDATE products SET";
-        $sql .= " quantity='{$q_result}'";
-        $sql .= " WHERE id='{$product['id']}'";
-		$result = $db->query($sql);
-		redirect( 'add_order.php' , false);
-      } else {
-        $session->msg("d", "Sorry Failed to insert.");
-	 redirect( 'add_order.php' , false);
-      }
-   } else {
-     $session->msg("d", $errors);
-	 redirect( 'add_order.php' , false);
-   }
- }
-/**
-	print "<pre>";
-	print_r($all_orders);
-	print "</pre>\n";
-**/
-
+	if(isset($_POST['add_order'])){
+		$req_fields = array( 'item','line','machine','reason','employee','q_taken');
+		validate_fields($req_fields);
+		$item = remove_junk($db->escape($_POST['item']));
+		$line = remove_junk($db->escape($_POST['line']));
+		$machine = remove_junk($db->escape($_POST['machine']));
+		$reason = remove_junk($db->escape($_POST['reason']));
+		$employee = remove_junk($db->escape($_POST['employee']));
+		$q_taken = remove_junk($db->escape($_POST['q_taken']));
+		$current_date    = make_date();
+		if(empty($errors))
+		{
+			$sql  = "INSERT INTO checkout (item,line,machine,reason,date,employee,q_taken)";
+			$sql .= " VALUES ('{$item}','{$line}','{$machine}','{$reason}','{$current_date}','{$employee}','{$q_taken}')";
+			if($db->query($sql))
+			{
+				$session->msg("s", "Successfully Signed out item");
+				$product = find_by_gpcnum("products", $item);
+				$q_before = $product[quantity];
+				$q_result = $q_before - $q_taken;
+				$sql = "UPDATE products SET";
+				$sql .= " quantity='{$q_result}'";
+				$sql .= " WHERE id='{$product['id']}'";
+				$result = $db->query($sql);
+				$product = last_id("products");
+				$product_id = $product['id'];
+				if ( $product_id == 0 )
+				{
+					$session->msg('d',' Sorry failed to added!');
+					redirect('add_product.php', false);
+				}
+				$comments  = $line;
+				$comments .= ',';
+				$comments .= $machine;
+				$comments .= ',';
+				$comments .= $reason;
+				$sql2  = "INSERT INTO stock (product_id,quantity,comments,date)";
+				$sql2 .= " VALUES ('{$product_id}','{$q_taken}','{$comments}','{$p_date}')";
+				$result2 = $db->query($sql2);
+				if( $result2 && $db->affected_rows() === 1)
+				{
+					$session->msg('s',"Product added ");
+				}
+				redirect( 'add_order.php' , false);
+			} else {
+				$session->msg("d", "Sorry Failed to insert.");
+				redirect( 'add_order.php' , false);
+			}
+		} else {
+			$session->msg("d", $errors);
+			redirect( 'add_order.php' , false);
+		}
+	}
 ?>
 
-<!--     *************************     -->
-
 <?php include_once('layouts/header.php'); ?>
-
-
 <div class="login-page">
     <div class="text-center">
 <!--     *************************     -->

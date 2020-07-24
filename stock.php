@@ -51,38 +51,31 @@
                     <td class="text-center">
 					<a href="view_product.php?id=<?php echo (int)$stock['product_id'];?>">
 					<?php
-
-					foreach ( $all_products as $product )
-					{
-					if ( $stock['product_id'] == $product['id'] ) { echo $product['name']; }
-					}
-										  
+						foreach ( $all_products as $product )
+						{
+							if ( $stock['product_id'] == $product['id'] ) { echo $product['name']; }
+						}
 					?>
 					</a>	
 					</td>
-                    
                     <td class="text-center">
 						<?php echo remove_junk(ucfirst($stock['quantity']));?>
 					</td>
-
-
                     <td class="text-center">
 						<?php echo remove_junk(ucfirst($stock['comments']));?>
 					</td>
                     <td class="text-center">
 						<?php echo remove_junk(ucfirst($stock['date']));?>
 					</td>
-
-
-                    <td class="text-center">
-                      <div class="btn-group">
-                        <a href="edit_stock.php?id=<?php echo (int)$stock['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
-                          <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                        <a href="delete_stock.php?id=<?php echo (int)$stock['id'];?>" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
-                          <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                      </div>
+					<td class="text-center">
+						<div class="btn-group">
+							<a href="edit_stock.php?id=<?php echo (int)$stock['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+							<a href="delete_stock.php?id=<?php echo (int)$stock['id'];?>" onClick="return confirm('Are you sure you want to delete?')" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</div>
                     </td>
 
                 </tr>

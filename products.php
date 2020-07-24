@@ -1,19 +1,27 @@
 <?php
-  $page_title = 'All Product';
-  require_once('includes/load.php');
-  // Checkin What level user has permission to view this page
-   page_require_level(2);
+	$page_title = 'All Product';
+	require_once('includes/load.php');
+	// Checkin What level user has permission to view this page
+	page_require_level(2);
 
-$all_categories = find_all('categories');
-$all_products = find_all('products');
+	$all_categories = find_all('categories');
+	$all_products = find_all('products');
 
-if ( isset($_POST['update_category'] ) )
-{
-  $products = find_products_by_category((int)$_POST['product-category']);
-} else {
-  $products = join_product_table();
-}
+	if ( isset($_POST['update_category'] ) )
+	{
+	  $products = find_products_by_category((int)$_POST['product-category']);
+	} else {
+	  $products = join_product_table();
+	}
 
+	if(isset($_POST['search']))
+	{
+		if(empty($errors))
+		{
+			$search = remove_junk($db->escape($_POST['search-text']));
+			redirect("results.php?id={$search}", false);
+		}
+	}
 ?>
 
 <!--     *************************     -->
@@ -54,7 +62,7 @@ if ( isset($_POST['update_category'] ) )
 	</div>
 </div>    
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-16">
 		<div class="panel panel-default">
 			<div class="panel-heading clearfix">
 				<div class="form-group">
@@ -77,7 +85,6 @@ if ( isset($_POST['update_category'] ) )
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-<!--     *************************     -->
 							<th class="text-center" style="width: 50px;">#</th>
 							<th class="text-center" style="width: 10%;"> Category </th>
 							<th> Product Title </th>
@@ -91,10 +98,8 @@ if ( isset($_POST['update_category'] ) )
 							<th class="text-center" style="width: 10%;"> Product Added </th>
 							<th class="text-center" style="width: 100px;"> Actions </th>
 						</tr>
-<!--     *************************     -->
 					</thead>
 					<tbody>
-<!--     *************************     -->
 						<?php foreach ($products as $product):?>
 							<tr>
 								<td class="text-center"><?php echo count_id();?></td>
@@ -114,7 +119,6 @@ if ( isset($_POST['update_category'] ) )
 								<td class="text-center"> <?php echo remove_junk($product['gpc_number']); ?></td>
 								<td class="text-center"> <?php echo remove_junk($product['manufacturernumber']); ?></td>
 								<td class="text-center"> <?php echo read_date($product['date']); ?></td>
-		<!--     *************************     -->
 								<td class="text-center">
 									<div class="btn-group">
 										<a href="add_stock.php?id=<?php echo (int)$product['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Add">
@@ -128,10 +132,8 @@ if ( isset($_POST['update_category'] ) )
 										</a>
 									</div>
 								</td>
-		<!--     *************************     -->
 							</tr>
 						<?php endforeach; ?>
-<!--     *************************     -->
 					</tbody>
 				</table>
 			</div>

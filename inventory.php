@@ -17,8 +17,18 @@
 			$query  = "UPDATE products set quantity={$p_qty} WHERE gpc_number={$p_gpc_number}";
 			if($db->query($query))
 			{
+				$p_date = make_date();
+				$product = find_by_gpcnum("products", $p_gpc_number);
+				$product_id = $product['id'];
 				$session->msg('s',"Inventory Updated.");
-				redirect('inventory.php', false);
+				$comments  = "Actual Inventory Count.";
+				$sql2  = "INSERT INTO stock (product_id,quantity,comments,date) VALUES ('{$product_id}','{$p_qty}','{$comments}','{$p_date}')";
+				$result2 = $db->query($sql2);
+				if( $result2 && $db->affected_rows() === 1)
+				{
+					$session->msg('s',"Product added ");
+				}
+				redirect('stock.php', false);
 			}else{
 				echo "that didnt work";
 			}

@@ -17,17 +17,28 @@
 				$sql .= " values ('".$getData[0]."','".$getData[1]."','".$getData[2]."',".$getData[3].",".$getData[4].",".$getData[5].",'".$getData[6]."','{$p_cat}','{$p_date}','".$getData[7]."','".$getData[8]."','".$getData[9]."','".$getData[10]."')";				
 				if($db->query($sql))
 				{
-					echo "<script type=\"text/javascript\">
-						alert(\"CSV File has been successfully Imported.\");
-						window.location = \"products.php\"
-						</script>";    
-				}
-				else {
-					echo "<script type=\"text/javascript\">
-						alert(\"I dont understand whats going on here.\");
-						window.location = \"products.php\"
-						</script>";
-				}
+					$product = last_id("products");
+					$product_id = $product['id'];
+					if ( $product_id == 0 )
+					{
+						$session->msg('d',' Sorry failed to added!');
+						redirect('add_product.php', false);
+					}
+					$quantity = $getData[3]
+					$comments = "initial stock";
+					$sql  = "INSERT INTO stock (product_id,quantity,comments,date)";
+					$sql .= " VALUES ('{$product_id}','{$quantity}','{$comments}','{$p_date}')";
+					$result = $db->query($sql);
+					if( $result && $db->affected_rows() === 1)
+					{
+						$session->msg('s',"Product added ");
+					}
+					else {
+						echo "<script type=\"text/javascript\">
+							alert(\"I dont understand whats going on here.\");
+							window.location = \"products.php\"
+							</script>";
+					}
 			}
 			fclose($file);
 		}
